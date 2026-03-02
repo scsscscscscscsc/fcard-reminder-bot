@@ -70,7 +70,7 @@ async def remind(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     # Ваш часовой пояс (смещение от UTC)
     # Для Москвы +3, для Алматы +5, для Нур-Султана +6
-    YOUR_TIMEZONE_OFFSET = 4  # ИЗМЕНИТЕ ЭТО ЗНАЧЕНИЕ НА ВАШЕ!
+    YOUR_TIMEZONE_OFFSET = 3  # ИЗМЕНИТЕ ЭТО ЗНАЧЕНИЕ НА ВАШЕ!
     
     # Получаем текущее время в UTC и добавляем смещение
     utc_now = datetime.utcnow()
@@ -170,5 +170,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
