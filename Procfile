@@ -1,1 +1,1 @@
-web: python FcardReminedBotTG.py
+web: python bot.py
