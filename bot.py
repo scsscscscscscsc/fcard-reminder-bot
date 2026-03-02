@@ -16,7 +16,7 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 if not BOT_TOKEN:
     raise ValueError("BOT_TOKEN не найден в переменных окружения!")
 
-REMINDER_DELAY = 4200  # 1 час 10 минут
+REMINDER_DELAY = 10  # 1 час 10 минут
 
 # Хранилище активных напоминаний (в памяти)
 user_reminders = {}
@@ -160,3 +160,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
