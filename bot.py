@@ -16,7 +16,7 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 if not BOT_TOKEN:
     raise ValueError("BOT_TOKEN не найден в переменных окружения!")
 
-REMINDER_DELAY = 10  # 1 час 10 минут
+REMINDER_DELAY = 3900  # 1 час 10 минут
 
 # Хранилище активных напоминаний (в памяти)
 user_reminders = {}
@@ -67,8 +67,18 @@ async def remind(update: Update, context: ContextTypes.DEFAULT_TYPE):
         'start_time': datetime.now(),
         'remind_time': datetime.now() + timedelta(seconds=REMINDER_DELAY)
     }
-
-    remind_time_str = (datetime.now() + timedelta(seconds=REMINDER_DELAY)).strftime("%H:%M:%S")
+    
+    # Ваш часовой пояс (смещение от UTC)
+    # Для Москвы +3, для Алматы +5, для Нур-Султана +6
+    YOUR_TIMEZONE_OFFSET = 4  # ИЗМЕНИТЕ ЭТО ЗНАЧЕНИЕ НА ВАШЕ!
+    
+    # Получаем текущее время в UTC и добавляем смещение
+    utc_now = datetime.utcnow()
+    local_now = utc_now + timedelta(hours=YOUR_TIMEZONE_OFFSET)
+    local_remind_time = local_now + timedelta(seconds=REMINDER_DELAY)
+    
+    remind_time_str = local_remind_time.strftime("%H:%M:%S")
+    
     keyboard = [[InlineKeyboardButton("❌ Отменить", callback_data="cancel")]]
     await update.message.reply_text(
         f"✅ Напоминание установлено!\n"
@@ -85,7 +95,7 @@ async def send_reminder(context: ContextTypes.DEFAULT_TYPE):
     try:
         await context.bot.send_message(
             chat_id=chat_id,
-            text="🔔 НАПОМИНАНИЕ!\n\nРебята, через час можно будет сыграть матч!"
+            text="🔔 НАПОМИНАНИЕ!\n\nСейчас можно будет сыграть матч!"
         )
     except Exception as e:
         logger.error(f"Ошибка при отправке: {e}")
@@ -160,4 +170,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
